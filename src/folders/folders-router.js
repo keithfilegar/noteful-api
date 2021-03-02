@@ -26,12 +26,14 @@ foldersRouter
         const { name } = req.body
         const newFolder = { name }
 
-        if(req.body.name === null) {
-            return res.status(400).json({
-                error: {
-                    message: `Request body must contain 'name'`
-                }
-            })
+        for(const [key, value] of Object.entries(newFolder)) {
+            if (value == null) {
+                return res.status(400).json({
+                    error: {
+                        message: `Missing '${key}' in request body`
+                    }
+                })
+            }
         }
 
         FoldersService.insertFolder(
@@ -46,5 +48,9 @@ foldersRouter
         })
         .catch(next)
     })
+
+foldersRouter
+    .route('/:folder_id')
+
 
 module.exports = foldersRouter
