@@ -10,6 +10,13 @@ const FoldersService = {
         .then(rows => {
             return rows[0]
         })
+    },
+    getFolderById(knex, id) {
+        return knex
+            .from('folders')
+            .select('*')
+            .where('id', id)
+            .first()
     }
 }
 
